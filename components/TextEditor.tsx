@@ -4,7 +4,7 @@ import Editor from '@/components/Editor/Editor';
 
 function TextEditor() {
   return (
-    <div className=" bg-[#F4F4F5] text-zinc-900 flex flex-col">
+    <div className=" bg-[#F4F4F5] text-zinc-900 mb-2 flex flex-col">
      
 
       {/* Main Content */}

@@ -14,19 +14,27 @@ export interface Snippet {
   createdAt: number;
 }
 
-export enum AICommandType {
-  IMPROVE = 'IMPROVE',
-  FIX_SPELLING = 'FIX_SPELLING',
-  SHORTER = 'SHORTER',
-  LONGER = 'LONGER',
-  CONTINUE = 'CONTINUE'
+export interface Token {
+  id: string;
+  original: string;
+  current: string;
+  isChanged: boolean;
+  type: 'word' | 'punctuation' | 'whitespace';
+  alternatives?: string[];
 }
 
-export interface AIRequest {
-  text: string;
-  command: AICommandType;
-  context?: string;
+export interface DictionaryEntry {
+  synonyms: string[];
+  pos?: 'noun' | 'verb' | 'adjective' | 'adverb';
 }
+
+export interface EngineSettings {
+  strength: number; // 0 to 100
+  preserveCapitalization: boolean;
+  lockedWords: string[];
+  mode: 'standard' | 'formal' | 'creative';
+}
+
 
 export interface ToolbarState {
   isBold: boolean;

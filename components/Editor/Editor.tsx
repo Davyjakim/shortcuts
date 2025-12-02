@@ -24,7 +24,7 @@ import ToolbarPlugin from "@/components/Editor/plugins/ToolbarPlugin";
 
 // Error Fallback
 function Placeholder() {
-  return <div className="editor-placeholder absolute top-[9%] px-1  z-20">Start typing ...</div>;
+  return <div className="editor-placeholder absolute top-[9%] px-1  ">Start typing ...</div>;
 }
 
 const initialConfig = {

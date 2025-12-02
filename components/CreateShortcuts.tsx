@@ -1,20 +1,15 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { toast } from "sonner";
 import { Plus, Trash2, Copy, Search, Command, X, Edit2 } from "lucide-react";
 import { nanoid } from "nanoid";
 
 import { Snippet, Shortcut } from "@/types";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import {
-  Button,
-  Input,
-  Textarea,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui-elements";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ShortcutRecorder } from "@/components/ShortcutRecoder";
 
 export default function CreateShortcuts() {
@@ -24,7 +19,7 @@ export default function CreateShortcuts() {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+const [isClient, setIsClient] = useState(false);
   // Edit State
   const [editingSnippetId, setEditingSnippetId] = useState<string | null>(null);
   const [formTitle, setFormTitle] = useState("");
@@ -65,7 +60,9 @@ export default function CreateShortcuts() {
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
   }, [snippets]);
-
+useEffect(() => {
+    setIsClient(true);
+  }, []);
   const copyToClipboard = (text: string) => {
     navigator.clipboard
       .writeText(text)
@@ -161,14 +158,14 @@ export default function CreateShortcuts() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-8 font-sans">
+    <div className=" bg-background text-foreground p-8 font-sans">
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
               <Command className="w-8 h-8" />
-              SnapKey
+              Shortcuts @j
             </h1>
             <p className="text-muted-foreground">
               Your personal snippet library. Press shortcuts to copy instantly.
@@ -191,72 +188,93 @@ export default function CreateShortcuts() {
             }
           />
         </div>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredSnippets.map((snippet) => (
-            <Card
-              key={snippet.id}
-              className="group relative transition-all hover:border-primary/50 hover:shadow-md"
-            >
-              <CardHeader className="pb-3">
-                <div className="flex justify-between items-start gap-2">
-                  <CardTitle className="text-lg leading-tight truncate pr-4">
-                    {snippet.title}
-                  </CardTitle>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4 bg-card p-1 rounded-md shadow-sm border">
-                    <button
-                      onClick={() => openModal(snippet)}
-                      className="p-1.5 hover:bg-accent rounded-sm text-muted-foreground hover:text-foreground"
-                    >
-                      <Edit2 className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => deleteSnippet(snippet.id)}
-                      className="p-1.5 hover:bg-destructive/10 rounded-sm text-muted-foreground hover:text-destructive"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {/* Option 1: Render Snippets wrapped in Suspense for potential async children */}
+  <Suspense
+    fallback={
+      <div className="col-span-full py-12 text-center text-muted-foreground">
+        Loading snippets...
+      </div>
+    }
+  >
+    {/* This is a better place for your logic now: */}
+    {filteredSnippets.length > 0 ? filteredSnippets.map((snippet) => (
+              <Card
+                key={snippet.id}
+                className="group relative transition-all hover:border-primary/50 hover:shadow-md"
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start gap-2">
+                    <CardTitle className="text-lg leading-tight truncate pr-4">
+                      {snippet.title}
+                    </CardTitle>
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity absolute top-4 right-4 bg-card p-1 rounded-md shadow-sm border">
+                      <button
+                        onClick={() => openModal(snippet)}
+                        className="p-1.5 hover:bg-accent rounded-sm text-muted-foreground hover:text-foreground"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => deleteSnippet(snippet.id)}
+                        className="p-1.5 hover:bg-destructive/10 rounded-sm text-muted-foreground hover:text-destructive"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-muted/50 p-3 rounded-md min-h-[80px] text-sm text-muted-foreground font-mono break-all line-clamp-4">
-                  {snippet.content}
-                </div>
-
-                <div className="flex items-center justify-between pt-2">
-                  <div className="flex items-center gap-2">
-                    {snippet.shortcut ? (
-                      <span className="inline-flex items-center rounded-md border bg-secondary px-2 py-1 text-xs font-semibold text-secondary-foreground">
-                        {formatShortcutString(snippet.shortcut)}
-                      </span>
-                    ) : (
-                      <span className="text-xs text-muted-foreground italic">
-                        No shortcut
-                      </span>
-                    )}
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="bg-muted/50 p-3 rounded-md  text-sm text-muted-foreground font-mono break-all line-clamp-4">
+                    {snippet.content}
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => copyToClipboard(snippet.content)}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Copy className="w-3.5 h-3.5 mr-2" />
-                    Copy
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
 
-          {filteredSnippets.length === 0 && (
-            <div className="col-span-full py-12 text-center text-muted-foreground border-2 border-dashed rounded-lg bg-card/10">
-              <p>No snippets found. Create one to get started!</p>
-            </div>
-          )}
-        </div>
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center gap-2">
+                      {snippet.shortcut ? (
+                        <span className="inline-flex items-center rounded-md border bg-secondary px-2 py-1 text-xs font-semibold text-secondary-foreground">
+                          {formatShortcutString(snippet.shortcut)}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-muted-foreground italic">
+                          No shortcut
+                        </span>
+                      )}
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => copyToClipboard(snippet.content)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Copy className="w-3.5 h-3.5 mr-2" />
+                      Copy
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+        
+    )) : (
+      // Render the 'No snippets found' if the list is empty *after* data is loaded
+      <div className="col-span-full py-12 text-center text-muted-foreground border-2 border-dashed rounded-lg bg-card/10">
+        <p>
+          {snippets.length === 0 && searchQuery === ""
+            ? "No snippets found. Create one to get started!"
+            : "No snippets match your search criteria."}
+        </p>
+      </div>
+    )}
+  </Suspense>
+  
+  {/* The second conditional is now covered by the new ternary above:
+  {filteredSnippets.length === 0 && (
+    <div className="col-span-full py-12 text-center text-muted-foreground border-2 border-dashed rounded-lg bg-card/10">
+      <p>No snippets found. Create one to get started!</p>
+    </div>
+  )}
+  */}
+</div>
+    
       </div>
 
       {/* Modal Overlay */}
