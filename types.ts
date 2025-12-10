@@ -43,3 +43,14 @@ export interface ToolbarState {
   isCode: boolean;
   blockType: string;
 }
+export interface Bookmark {
+  id: string;
+  url: string;
+  title: string;
+ 
+  createdAt: number;
+}
+
+export type BookmarkFormData = Omit<Bookmark, 'id' | 'createdAt'>;
+
+

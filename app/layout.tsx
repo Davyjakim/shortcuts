@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 
 
 
 export const metadata: Metadata = {
-  title: " Shortcuts @j",
+  title: " Shortcuts j@",
   description: "create shortcuts, Format and validate Json schema",
 };
 
@@ -21,6 +21,7 @@ export default function RootLayout({
         className={` antialiased`}
       >
       <Toaster/>
+      <Analytics/>
         {children}
       </body>
     </html>

@@ -1,52 +1,55 @@
-// components/NavBar.jsx
-'use client';
+"use client";
 
-// Define the IDs for the sections you want to scroll to
+import {
+  Bookmark,
+  Keyboard,
+  FileText,
+  Braces,
+} from "lucide-react";
+
+// Section IDs
 const sectionIds = {
-  shortcuts: 'create-shortcuts-section',
-  textEditor: 'text-editor-section',
-  jsonParser: 'json-parser-section',
+  quicklinks: "create-quicklinks-section",
+  shortcuts: "create-shortcuts-section",
+  textEditor: "text-editor-section",
+  jsonParser: "json-parser-section",
 };
 
 const NavBar = () => {
-  // NOTE: In a real-world app, you would also track the current active section 
-  // (e.g., using Intersection Observer) to highlight the active link.
-  
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      // Smooth scroll to the element
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    // 1. Elevated Bar: Darker background, deeper shadow, sticky for persistent access
-    <nav className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-lg shadow-gray-100/50">
+    <nav className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center h-14 space-x-2 sm:space-x-8">
-          
-          {/* Section 1: Shortcuts */}
-          <NavItem 
-            id={sectionIds.shortcuts} 
-            label="Create Shortcuts" 
-            icon="⌨️"
-            onClick={scrollToSection}
-          />
-          
-          {/* Section 2: Text Editor */}
-          <NavItem 
-            id={sectionIds.textEditor} 
-            label="Text Editor" 
-            icon="📝"
+        <div className="flex justify-center h-14 gap-2 sm:gap-10">
+          <NavItem
+            id={sectionIds.quicklinks}
+            label="Quick Links"
+            Icon={Bookmark}
             onClick={scrollToSection}
           />
 
-          {/* Section 3: JSON Formatter */}
-          <NavItem 
-            id={sectionIds.jsonParser} 
-            label="JSON Formatter" 
-            icon="⚙️"
+          <NavItem
+            id={sectionIds.shortcuts}
+            label="Shortcuts"
+            Icon={Keyboard}
+            onClick={scrollToSection}
+          />
+
+          <NavItem
+            id={sectionIds.textEditor}
+            label="Text Editor"
+            Icon={FileText}
+            onClick={scrollToSection}
+          />
+
+          <NavItem
+            id={sectionIds.jsonParser}
+            label="JSON Formatter"
+            Icon={Braces}
             onClick={scrollToSection}
           />
         </div>
@@ -55,31 +58,47 @@ const NavBar = () => {
   );
 };
 
-// Extracted NavItem for cleaner rendering and reusable styling
-const NavItem = ({ id, label, icon, onClick }: { id: string, label: string, icon: string, onClick: (id: string) => void }) => (
-  <button
-    onClick={() => onClick(id)}
-    // 2. Modern Styles: Use neutral gray for base, professional blue for hover/active.
-    // Use focus ring for accessibility.
-    className="
-      inline-flex items-center 
-      px-2 pt-1 border-b-2 
-      text-sm font-medium leading-5 
-      text-gray-600 
-      border-transparent 
-      transition duration-150 ease-in-out
-      hover:text-indigo-600 hover:border-indigo-500
-      focus:outline-none focus:text-indigo-700 focus:border-indigo-700
-      
-      // Optional: Add a subtle active class if you implement state tracking
-      // aria-current={isActive ? 'page' : undefined} 
-      // ${isActive ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500'}
-    "
-    role="tab" // Semantically appropriate for navigation within a single page
-  >
-    <span className="mr-2 text-lg">{icon}</span> {/* Adjusted icon size */}
-    {label}
-  </button>
-);
+// Single Nav Item Component
+const NavItem = ({
+  id,
+  label,
+  Icon,
+  onClick,
+}: {
+  id: string;
+  label: string;
+  Icon: any;
+  onClick: (id: string) => void;
+}) => {
+  return (
+    <button
+      onClick={() => onClick(id)}
+      className="
+        group relative inline-flex items-center gap-2 
+        font-medium text-sm text-slate-600 
+        transition-colors duration-200 px-2
+        hover:text-indigo-600
+        focus:outline-none focus:text-indigo-600
+      "
+    >
+      <Icon
+        size={16}
+        className="text-slate-400 group-hover:text-indigo-500 transition-colors duration-200"
+      />
+
+      {label}
+
+      {/* Animated underline */}
+      <span
+        className="
+          absolute bottom-0 left-0 right-0 
+          h-0.5 bg-indigo-500 rounded-full 
+          scale-x-0 group-hover:scale-x-100 
+          transition-transform duration-300 origin-center
+        "
+      />
+    </button>
+  );
+};
 
 export default NavBar;
