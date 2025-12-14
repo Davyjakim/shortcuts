@@ -9,13 +9,15 @@ import  Main  from '@/components/Bookmarks/main'
 import React, { useState } from 'react'
 import { BookMarked, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Smain from '@/components/summiraser/Smain'
 
 // Define the IDs (should match the IDs used in NavBar.jsx)
 const sectionIds = {
-  quicklinks: 'create-quicklinks-section',
-  shortcuts: 'create-shortcuts-section',
-  textEditor: 'text-editor-section',
-  jsonParser: 'json-parser-section',
+  quicklinks: "create-quicklinks-section",
+  shortcuts: "create-shortcuts-section",
+  textEditor: "text-editor-section",
+  jsonParser: "json-parser-section",
+  sammariser: "sammarise-text-section",
 };
 
 function page() {
@@ -73,6 +75,10 @@ function page() {
         <div id={sectionIds.jsonParser} className="mb-10 pt-16 -mt-16">
           <h2 className="text-2xl font-bold mb-4">⚙️ JSON Formatter</h2>
           <JsonParser/>
+        </div>
+          <div id={sectionIds.sammariser} className="mb-10 pt-16 -mt-16">
+          <h2 className="text-2xl font-bold mb-4">Summarise Text</h2>
+          <Smain/>
         </div>
       </main>
     </div>

@@ -13,6 +13,7 @@ const sectionIds = {
   shortcuts: "create-shortcuts-section",
   textEditor: "text-editor-section",
   jsonParser: "json-parser-section",
+  sammariser: "sammarise-text-section",
 };
 
 const NavBar = () => {
@@ -49,6 +50,12 @@ const NavBar = () => {
           <NavItem
             id={sectionIds.jsonParser}
             label="JSON Formatter"
+            Icon={Braces}
+            onClick={scrollToSection}
+          />
+           <NavItem
+            id={sectionIds.sammariser}
+            label="Summarise Text"
             Icon={Braces}
             onClick={scrollToSection}
           />
