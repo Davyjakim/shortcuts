@@ -182,23 +182,23 @@ export default function SmartSummarizer() {
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">
               Summary Result
             </h2>
-            <p className="text-slate-500">
+           {summary&& <p className="text-slate-500">
               This summary is <strong className="text-lg">not</strong> Ai
               generated
-            </p>
+            </p>}
           </div>
-          <h3 className="">
+          {summary&&<h3 className="">
               Summary details
-            </h3>
-          <div className="flex justify-between items-center text-xs font-medium text-slate-500 bg-slate-50 border border-slate-100 p-2.5 rounded-lg">
+            </h3>}
+          {summary&&<div className="flex justify-between items-center text-xs font-medium text-slate-500 bg-slate-50 border border-slate-100 p-2.5 rounded-lg">
             
             <span className="flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5" /> Words: {summary.split(" ").length}
+              <FileText className="w-3.5 h-3.5" /> Words: {summary.split(" ").length-1}
             </span>
             <span className={isOverLimit ? "text-red-500 font-bold" : ""}>
               Characters: {summary.length} 
             </span>
-          </div>
+          </div>}
           <Card
             className={`relative p-6 h-full min-h-[500px] shadow-md transition-all duration-500 ${
               summary
