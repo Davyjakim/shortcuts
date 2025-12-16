@@ -67,10 +67,10 @@ function page() {
           <CreateShortcuts/>
         </div>
 
-        <div id={sectionIds.textEditor} className="mb-10 pt-16 -mt-16">
+        {/* <div id={sectionIds.textEditor} className="mb-10 pt-16 -mt-16">
           <h2 className="text-2xl font-bold mb-4">📝 Text Editor</h2>
           <TextEditor/>
-        </div>
+        </div> */}
 
         <div id={sectionIds.jsonParser} className="mb-10 pt-16 -mt-16">
           <h2 className="text-2xl font-bold mb-4">⚙️ JSON Formatter</h2>

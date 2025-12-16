@@ -163,10 +163,7 @@ useEffect(() => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Command className="w-8 h-8" />
-              Shortcuts @j
-            </h1>
+            
             <p className="text-muted-foreground">
               Your personal snippet library. Press shortcuts to copy instantly.
             </p>
