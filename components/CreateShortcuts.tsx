@@ -53,7 +53,7 @@ const [isClient, setIsClient] = useState(false);
 
       if (match) {
         e.preventDefault();
-        copyToClipboard(match.content);
+        copyToClipboard(match.content,match.title);
       }
     };
 
@@ -63,11 +63,11 @@ const [isClient, setIsClient] = useState(false);
 useEffect(() => {
     setIsClient(true);
   }, []);
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string,title:string) => {
     navigator.clipboard
       .writeText(text)
       .then(() =>
-        toast.success("Copied to clipboard!", {
+        toast.success(`Copied ${title}`, {
           style: {
             background: "#333",
             color: "#fff",
@@ -241,7 +241,7 @@ useEffect(() => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => copyToClipboard(snippet.content)}
+                      onClick={() => copyToClipboard(snippet.content,snippet.title)}
                       className="opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <Copy className="w-3.5 h-3.5 mr-2" />
