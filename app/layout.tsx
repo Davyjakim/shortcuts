@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 
-
+import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   title: " Shortcuts j@",
@@ -22,7 +22,10 @@ export default function RootLayout({
       >
       <Toaster/>
       <Analytics/>
-        {children}
+  
+            {children}
+        
+        
       </body>
     </html>
   );

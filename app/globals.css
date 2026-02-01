@@ -79,10 +79,22 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
+  --background: oklch(0.21 0.006 285.88); /* #202124 equivalent */
+  --foreground: oklch(0.92 0.004 286.32); /* Off-white text */
+  --card: oklch(0.25 0.006 285.88);       /* Slightly lighter gray for cards #292a2d */
+  --card-foreground: oklch(0.92 0.004 286.32);
+  
+  --primary: oklch(0.72 0.12 248.2);      /* Google Blue #8ab4f8 */
+  --primary-foreground: oklch(0.2 0.05 250);
+  
+  --secondary: oklch(0.32 0.01 285);      /* Muted gray for buttons */
+  --secondary-foreground: oklch(0.98 0 0);
+  
+  --border: oklch(0.35 0.01 285 / 0.8);   /* Subtle border */
+  --muted: oklch(0.28 0.01 285);
+  --muted-foreground: oklch(0.7 0.01 285);
+ 
+  
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);

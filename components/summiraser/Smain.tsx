@@ -101,7 +101,7 @@ export default function SmartSummarizer() {
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1  gap-8 items-start">
         {/* Left Column: Input */}
         <div className="flex flex-col gap-6">
           <div className="space-y-2">
@@ -115,7 +115,7 @@ export default function SmartSummarizer() {
 
           <Card className="p-6 shadow-md border-slate-200/60 bg-white/50 backdrop-blur-sm">
             <div className="flex flex-col gap-6">
-              <div className="grid w-full gap-2">
+              {/* <div className="grid w-full gap-2">
                 <Label htmlFor="topics">Target Topics</Label>
                 <div className="flex items-center gap-2">
                   <Input
@@ -132,7 +132,7 @@ export default function SmartSummarizer() {
                     summary
                   </span>
                 </div>
-              </div>
+              </div> */}
 
               <div className="grid w-full gap-2">
                 <Label htmlFor="original">Source Text</Label>
@@ -158,7 +158,7 @@ export default function SmartSummarizer() {
                 </span>
               </div>
 
-              <Button
+              {/* <Button
                 onClick={handleSummarize}
                 disabled={!originalText.trim() || isLoading || isOverLimit}
                 className="w-full text-base py-6 shadow-lg transition-all active:scale-[0.98]"
@@ -171,12 +171,12 @@ export default function SmartSummarizer() {
                 ) : (
                   "Generate Summary"
                 )}
-              </Button>
+              </Button> */}
             </div>
           </Card>
         </div>
 
-        {/* Right Column: Output */}
+        {/* Right Column: Output
         <div className="flex flex-col gap-6 lg:sticky lg:top-8 h-full">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -247,7 +247,7 @@ export default function SmartSummarizer() {
               </div>
             )}
           </Card>
-        </div>
+        </div> */}
       </div>
     </div>
   );
